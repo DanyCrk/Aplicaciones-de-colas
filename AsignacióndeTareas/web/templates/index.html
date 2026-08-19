@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Planificador de Tareas
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/estilos.css') }}"
+    >
+
+</head>
+
+<body>
+
+
+    <div class="contenedor">
+
+
+
+        <header class="encabezado">
+
+            <h1>
+                Planificador de Tareas
+            </h1>
+
+            <p>
+                Planificación de tareas en múltiples procesadores
+            </p>
+
+        </header>
+
+
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+
+            {% if mensajes %}
+
+                <div class="mensajes">
+
+                    {% for categoria, mensaje in mensajes %}
+
+                        <div class="mensaje {{ categoria }}">
+
+                            {{ mensaje }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <section class="panel">
+
+            <h2>
+                Registrar tarea
+            </h2>
+
+            <form
+                action="{{ url_for('agregar') }}"
+                method="POST"
+                class="formulario"
+            >
+
+                <div class="campo">
+
+                    <label for="nombre">
+                        Nombre de la tarea
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Ej: Tarea 1"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="tiempo">
+                        Tiempo de ejecución
+                    </label>
+
+                    <input
+                        type="number"
+                        id="tiempo"
+                        name="tiempo"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Ej: 5"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="boton boton-principal"
+                >
+                     Agregar tarea
+                </button>
+
+            </form>
+
+        </section>
+
+        <section class="panel tareas-panel">
+
+            <div class="panel-titulo">
+
+                <div>
+
+                    <h2>
+                        Tareas registradas
+                    </h2>
+
+                    <span class="contador">
+
+                        {{ tareas|length }} tarea(s)
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {% if tareas %}
+
+                <div class="tabla-contenedor">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Tarea
+                                </th>
+
+                                <th>
+                                    Tiempo
+                                </th>
+
+                                <th>
+                                    Acción
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for tarea in tareas %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ tarea.id }}
+                                    </td>
+
+                                    <td class="nombre-tarea">
+                                        {{ tarea.nombre }}
+                                    </td>
+
+                                    <td>
+                                        {{ "%.2f"|format(tarea.tiempo) }}
+                                    </td>
+
+                                    <td>
+
+                                        <form
+                                            action="{{ url_for('eliminar', id_tarea=tarea.id) }}"
+                                            method="POST"
+                                            class="form-eliminar"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="boton boton-eliminar"
+                                            >
+                                                Eliminar
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="sin-datos">
+
+                    <p>
+                        No hay tareas registradas.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if tareas %}
+
+                <form
+                    action="{{ url_for('limpiar') }}"
+                    method="POST"
+                    class="form-limpiar"
+                >
+
+                    <button
+                        type="submit"
+                        class="boton boton-secundario"
+                        id="boton-limpiar"
+                    >
+                        Limpiar todas las tareas
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        </section>
+
+        <section class="panel">
+
+            <h2>
+                Configuración de planificación
+            </h2>
+
+            <form
+                action="{{ url_for('planificar') }}"
+                method="POST"
+                class="formulario-planificacion"
+            >
+
+                <div class="campo">
+
+                    <label for="procesadores">
+                        Número de procesadores
+                    </label>
+
+                    <input
+                        type="number"
+                        id="procesadores"
+                        name="procesadores"
+                        min="1"
+                        value="{{ procesadores|default(2) }}"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="boton boton-planificar"
+                >
+                    Ejecutar planificación
+                </button>
+
+            </form>
+
+        </section>
+
+        <section class="panel resultados-panel">
+
+            <h2>
+                Resultados
+            </h2>
+
+
+            {% if resultados is not none %}
+
+                {% if resultados %}
+
+                    <div class="estadisticas">
+
+                        <div class="estadistica">
+
+                            <span class="estadistica-titulo">
+                                Procesadores
+                            </span>
+
+                            <span class="estadistica-valor">
+                                {{ procesadores }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="estadistica">
+
+                            <span class="estadistica-titulo">
+                                Tareas
+                            </span>
+
+                            <span class="estadistica-valor">
+                                {{ resultados|length }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="estadistica">
+
+                            <span class="estadistica-titulo">
+                                Tiempo medio
+                            </span>
+
+                            <span class="estadistica-valor">
+                                {{ "%.2f"|format(promedio) }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="estadistica">
+
+                            <span class="estadistica-titulo">
+                                Tiempo total
+                            </span>
+
+                            <span class="estadistica-valor">
+                                {{ "%.2f"|format(total) }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tabla-contenedor resultados-tabla">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Tarea
+                                    </th>
+
+                                    <th>
+                                        Procesador
+                                    </th>
+
+                                    <th>
+                                        Inicio
+                                    </th>
+
+                                    <th>
+                                        Finalización
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for resultado in resultados %}
+
+                                    <tr>
+
+                                        <td class="nombre-tarea">
+                                            {{ resultado.tarea.nombre }}
+                                        </td>
+
+                                        <td>
+
+                                            <span class="procesador">
+
+                                                P{{ resultado.procesador }}
+
+                                            </span>
+
+                                        </td>
+
+                                        <td>
+                                            {{ "%.2f"|format(resultado.inicio) }}
+                                        </td>
+
+                                        <td>
+                                            {{ "%.2f"|format(resultado.finalizacion) }}
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% endif %}
+
+            {% else %}
+
+                <div class="sin-datos">
+
+                    <p>
+                        Ejecute la planificación para visualizar
+                        los resultados.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+       
+
+<section class="panel balanceo-panel">
+
+    <h2>
+        Verificación de cadenas balanceadas
+    </h2>
+
+
+    <form
+        action="{{ url_for('balancear') }}"
+        method="POST"
+        class="formulario-balanceo"
+    >
+
+        <div class="campo">
+
+            <label for="cadena">
+                Ingrese una cadena
+            </label>
+
+            <input
+                type="text"
+                id="cadena"
+                name="cadena"
+                placeholder="Ej: {[()]}"
+                value="{{ cadena_balanceo|default('') }}"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="boton boton-balancear"
+        >
+            Verificar cadena
+        </button>
+
+    </form>
+
+    {% if resultado_balanceo is defined %}
+
+        <div
+            class="resultado-balanceo
+            {% if resultado_balanceo %}
+                correcto
+            {% else %}
+                incorrecto
+            {% endif %}"
+        >
+
+            {% if resultado_balanceo %}
+
+                <strong>
+                    Cadena balanceada
+                </strong>
+
+            {% else %}
+
+                <strong>
+                    Cadena no balanceada
+                </strong>
+
+            {% endif %}
+
+            <p>
+                {{ mensaje_balanceo }}
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <h3>
+        prueba
+    </h3>
+
+
+    {% if resultados_balanceo %}
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Cadena
+                        </th>
+
+                        <th>
+                            Resultado
+                        </th>
+
+                        <th>
+                            Mensaje
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for resultado in resultados_balanceo %}
+
+                        <tr>
+
+                            <td class="cadena">
+
+                                {{ resultado.cadena }}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if resultado.balanceada %}
+
+                                    <span class="estado correcto">
+
+                                        Balanceada
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="estado incorrecto">
+
+                                        No balanceada
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ resultado.mensaje }}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
+
+</body>
+
+</html>

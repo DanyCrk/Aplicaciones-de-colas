@@ -1,0 +1,595 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f4f6f8;
+
+    color: #000000;
+}
+
+
+.contenedor {
+
+    width: 95%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 30px 0 50px;
+}
+
+.encabezado {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+
+.encabezado h1 {
+
+    margin: 0;
+
+    font-size: 34px;
+
+    color: #000000;
+}
+
+
+.encabezado p {
+
+    margin-top: 8px;
+
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+
+
+.panel {
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 22px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+.panel h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 20px;
+
+    font-size: 20px;
+
+    color: #1e293b;
+}
+
+
+.formulario {
+
+    display: flex;
+
+    align-items: end;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+
+.formulario-planificacion {
+
+    display: flex;
+
+    align-items: end;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+
+.campo {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.campo label {
+
+    font-weight: bold;
+
+    font-size: 14px;
+
+    color: #475569;
+}
+
+
+.campo input {
+
+    width: 220px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.campo input:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+
+
+.boton {
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 10px 16px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.boton:hover {
+
+    transform: translateY(-1px);
+
+    opacity: 0.9;
+}
+
+
+.boton-principal {
+
+    background: #6493f8;
+
+    color: white;
+}
+
+
+.boton-planificar {
+
+    background: #29489b;
+
+    color: white;
+
+    padding: 11px 22px;
+
+    font-size: 15px;
+}
+
+
+.boton-eliminar {
+
+    background: #dc2626;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    font-size: 12px;
+}
+
+
+.boton-secundario {
+
+    background: #64748b;
+
+    color: white;
+}
+
+
+.form-limpiar {
+
+    margin-top: 15px;
+}
+
+
+.tabla-contenedor {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+thead {
+
+    background: #1e3a8a;
+
+    color: white;
+}
+
+
+th {
+
+    padding: 12px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+td {
+
+    padding: 11px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    font-size: 14px;
+}
+
+
+tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.nombre-tarea {
+
+    font-weight: bold;
+
+    text-align: left;
+}
+
+
+
+.resultados-panel {
+
+    min-height: 350px;
+}
+
+
+.resultados-tabla {
+
+    margin-top: 20px;
+}
+
+
+.procesador {
+
+    display: inline-block;
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+}
+
+
+
+.estadisticas {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.estadistica {
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    text-align: center;
+}
+
+
+.estadistica-titulo {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+}
+
+
+.estadistica-valor {
+
+    display: block;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #1e3a8a;
+}
+
+
+
+.mensajes {
+
+    margin-bottom: 20px;
+}
+
+
+.mensaje {
+
+    padding: 12px 16px;
+
+    border-radius: 7px;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+}
+
+
+.mensaje.success {
+
+    background: #dcfce7;
+
+    color: #29633f;
+}
+
+
+.mensaje.error {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* ==========================================================
+   SIN DATOS
+========================================================== */
+
+.sin-datos {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    border: 2px dashed #cbd5e1;
+
+    border-radius: 8px;
+}
+
+
+@media (max-width: 800px) {
+
+    .formulario,
+    .formulario-planificacion {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .campo input {
+
+        width: 100%;
+    }
+
+
+    .estadisticas {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .estadisticas {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .encabezado h1 {
+
+        font-size: 27px;
+    }
+}
+
+
+.balanceo-panel {
+
+    margin-top: 25px;
+}
+
+
+.descripcion {
+
+    color: #64748b;
+
+    margin-bottom: 20px;
+
+    line-height: 1.5;
+}
+
+
+.formulario-balanceo {
+
+    display: flex;
+
+    align-items: end;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+    flex-wrap: wrap;
+}
+
+
+.formulario-balanceo input {
+
+    width: 350px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    font-size: 16px;
+
+    font-family: monospace;
+}
+
+
+.boton-balancear {
+
+    background: #225bc5;
+
+    color: white;
+}
+
+
+.resultado-balanceo {
+
+    padding: 18px;
+
+    border-radius: 8px;
+
+    margin-bottom: 25px;
+
+    border-left: 5px solid;
+}
+
+
+.resultado-balanceo.correcto {
+
+    background: #dcfce7;
+
+    border-left-color: #16a34a;
+
+    color: #166534;
+}
+
+
+.resultado-balanceo.incorrecto {
+
+    background: #fee2e2;
+
+    border-left-color: #dc2626;
+
+    color: #991b1b;
+}
+
+
+.resultado-balanceo p {
+
+    margin-bottom: 0;
+}
+
+
+.cadena {
+
+    font-family: monospace;
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+.estado {
+
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+
+    font-size: 13px;
+}
+
+
+.estado.correcto {
+
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+
+.estado.incorrecto {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
