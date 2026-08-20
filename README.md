@@ -1,90 +1,145 @@
 # Aplicaciones-de-colas
-Planificador de Tareas  Aplicación de escritorio desarrollada en Python que permite registrar y planificar un conjunto de tareas en múltiples procesadores.  El sistema busca distribuir las tareas entre los procesadores disponibles y calcular el tiempo de finalización y el tiempo medio de finalización de las tareas. 
 
+## Planificador de Tareas
 
-##  Características
+Aplicación web desarrollada en **Python y Flask** que permite registrar y planificar un conjunto de tareas en múltiples procesadores.
 
--  Registrar tareas.
--  Asignar un tiempo de ejecución a cada tarea.
--  Eliminar tareas individualmente.
--  Eliminar todas las tareas.
--  Visualizar las tareas registradas.
--  Definir el número de procesadores.
--  Planificar automáticamente las tareas.
--  Asignar tareas a los procesadores disponibles.
--  Calcular el tiempo de inicio y finalización.
--  Calcular el tiempo medio de finalización.
--  Mostrar los resultados mediante una interfaz gráfica.
+El sistema busca distribuir las tareas entre los procesadores disponibles y calcular el tiempo de inicio, tiempo de finalización, tiempo medio de finalización y tiempo total de ejecución.
+
+La aplicación cuenta con una interfaz web desarrollada utilizando **HTML, CSS y JavaScript**, mientras que la lógica de procesamiento se mantiene implementada en Python.
+
+---
+
+## Características
+
+- Registrar tareas.
+- Asignar un tiempo de ejecución a cada tarea.
+- Eliminar tareas individualmente.
+- Eliminar todas las tareas.
+- Visualizar las tareas registradas.
+- Definir el número de procesadores.
+- Planificar automáticamente las tareas.
+- Distribuir las tareas entre los procesadores disponibles.
+- Calcular el tiempo de inicio de cada tarea.
+- Calcular el tiempo de finalización de cada tarea.
+- Calcular el tiempo medio de finalización.
+- Calcular el tiempo total de planificación.
+- Visualizar los resultados mediante una interfaz web.
+- Verificar cadenas balanceadas utilizando una estructura de datos tipo pila.
+- Mostrar los resultados del algoritmo de balanceo directamente en la interfaz web.
 
 ---
 
 ## Tecnologías utilizadas
 
+### Backend
+
 - **Python 3**
-- **Tkinter**
+- **Flask**
 - Programación Orientada a Objetos (POO)
 - Arquitectura modular
+
+### Frontend
+
+- **HTML5**
+- **CSS3**
+- **JavaScript**
+
+### Algoritmos y estructuras de datos
+
+- Planificación de tareas en múltiples procesadores.
+- Ordenamiento de tareas por tiempo de ejecución.
+- Asignación de tareas al procesador disponible.
+- Cálculo de tiempos de finalización.
+- Cálculo del tiempo medio de finalización.
+- Estructura de datos **Pila (Stack)** para verificar cadenas balanceadas.
 
 ---
 
 ## Estructura del proyecto
 
 ```text
-planificador-tareas/
+AsignacióndeTareas/
 │
 ├── main.py
 │
-├── modelos/
+├── data/
 │   ├── __init__.py
-│   └── tarea.py
+│   └── gestor.py
 │
-├── servicios/
+├── modelo/
 │   ├── __init__.py
-│   └── gestor_tareas.py
+│   └── ...
 │
-├── logica/
+├── proceso/
 │   ├── __init__.py
-│   └── planificador.py
+│   ├── planificador.py
+│   └── balanceo.py
 │
-└── interfaz/
+├── interfaz/
+│   ├── __init__.py
+│   └── ...
+│
+└── web/
     ├── __init__.py
-    ├── vista_principal.py
-    ├── titulo.py
-    ├── formulario_tarea.py
-    ├── tabla_tareas.py
-    ├── botones.py
-    └── resultados.py
+    ├── app.py
+    │
+    ├── templates/
+    │   └── index.html
+    │
+    └── static/
+        ├── css/
+        │   └── estilos.css
+        │
+        └── js/
+            └── app.js
 ```
-
-## Instalación
-1. Requisitos
+Instalación
+## Requisitos
 
 Se necesita tener instalado:
 
--Python 3.10 o superior
--Tkinter
+Python 3.10 o superior
+Flask
 
-En Windows, Tkinter normalmente viene incluido con la instalación oficial de Python.
-Puedes comprobar que Tkinter está disponible ejecutando:
-```text
-python -m tkinter
+Si Flask todavía no está instalado:
+```text 
+python -m pip install flask
+
 ```
-Si aparece una ventana de prueba de Tkinter, está correctamente instalado.
+verificar la instalación:
+```text 
+python -m flask --version
+```
 
-2. Clonar el repositorio
+## Clonar el repositorio
 
 Clona el proyecto desde GitHub:
-```text
+```text 
 git clone https://github.com/TU-USUARIO/planificador-tareas.git
 ```
+
+
 Entra en la carpeta:
 
 cd planificador-tareas
-3. Ejecutar el programa
 
-Ejecuta:
-```text
-python main.py
+## Ejecución de la aplicación
+
+Es importante ejecutar Flask desde la carpeta raíz del proyecto.
+
+```text 
+python -m web.app
+
 ```
+## Abrir la aplicación
 
-La aplicación gráfica se abrirá automáticamente.
+Después de ejecutar el comando anterior Flask mostrará algo similar a:
+
+* Serving Flask app 'web.app'
+* Debug mode: on
+* Running on http://127.0.0.1:5000
+
+Abre el siguiente enlace en tu navegador:
+
+http://127.0.0.1:5000
